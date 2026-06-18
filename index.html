@@ -1,119 +1,114 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <title>Bexruzni kichik kalkulatori
-  </title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #111;
-      font-family: Arial;
-    }
+<meta charset="UTF-8">
+<title>Calculator + Yosh</title>
 
-    .calc {
-      width: 260px;
-      background: #222;
-      padding: 15px;
-      border-radius: 10px;
-    }
+<style>
+body{
+  font-family: Arial;
+  text-align:center;
+  background:#111;
+  color:white;
+}
 
-    input {
-      width: 100%;
-      height: 50px;
-      font-size: 22px;
-      margin-bottom: 10px;
-      text-align: right;
-      padding-right: 10px;
-    }
+.box{
+  margin-top:30px;
+  padding:20px;
+}
 
-    button {
-      width: 60px;
-      height: 60px;
-      margin: 5px;
-      font-size: 20px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-    }
+button{
+  padding:10px 15px;
+  margin:5px;
+  cursor:pointer;
+}
 
-    .btn {
-      background: #333;
-      color: white;
-    }
-
-    .equal {
-      background: orange;
-      color: white;
-      width: 130px;
-    }
-
-    .clear {
-      background: red;
-      color: white;
-      width: 130px;
-    }
-  </style>
+input{
+  padding:10px;
+  margin:5px;
+}
+</style>
 </head>
 <body>
 
-<div class="calc">
-  <input type="text" id="display" disabled>
+<h2>Mini App</h2>
 
-  <div>
-    <button class="btn" onclick="press('7')">7</button>
-    <button class="btn" onclick="press('8')">8</button>
-    <button class="btn" onclick="press('9')">9</button>
-    <button class="btn" onclick="press('/')">/</button>
-  </div>
+<!-- MENU -->
+<button onclick="showCalc()">Calculator</button>
+<button onclick="showAge()">Yosh / Yil</button>
 
-  <div>
-    <button class="btn" onclick="press('4')">4</button>
-    <button class="btn" onclick="press('5')">5</button>
-    <button class="btn" onclick="press('6')">6</button>
-    <button class="btn" onclick="press('*')">*</button>
-  </div>
+<hr>
 
-  <div>
-    <button class="btn" onclick="press('1')">1</button>
-    <button class="btn" onclick="press('2')">2</button>
-    <button class="btn" onclick="press('3')">3</button>
-    <button class="btn" onclick="press('-')">-</button>
-  </div>
+<!-- CALCULATOR -->
+<div id="calc" class="box">
+  <h3>Calculator</h3>
+  <input id="a" type="number" placeholder="1-son">
+  <input id="b" type="number" placeholder="2-son"><br>
 
-  <div>
-    <button class="btn" onclick="press('0')">0</button>
-    <button class="btn" onclick="press('.')">.</button>
-    <button class="btn" onclick="press('+')">+</button>
-  </div>
+  <button onclick="add()">+</button>
+  <button onclick="sub()">-</button>
+  <button onclick="mul()">*</button>
+  <button onclick="div()">/</button>
 
-  <div>
-    <button class="clear" onclick="clearDisplay()">C</button>
-    <button class="equal" onclick="calculate()">=</button>
-  </div>
+  <h3>Natija: <span id="res"></span></h3>
+</div>
+
+<!-- AGE -->
+<div id="age" class="box" style="display:none;">
+  <h3>Yosh hisoblash</h3>
+
+  <input id="year" type="number" placeholder="Tug'ilgan yil">
+
+  <button onclick="calcAge()">Hisobla</button>
+
+  <h3>Yosh: <span id="ageRes"></span></h3>
 </div>
 
 <script>
-  let display = document.getElementById("display");
 
-  function press(val) {
-    display.value += val;
-  }
+// MENU
+function showCalc(){
+  document.getElementById("calc").style.display="block";
+  document.getElementById("age").style.display="none";
+}
 
-  function clearDisplay() {
-    display.value = "";
-  }
+function showAge(){
+  document.getElementById("calc").style.display="none";
+  document.getElementById("age").style.display="block";
+}
 
-  function calculate() {
-    try {
-      display.value = eval(display.value);
-    } catch {
-      display.value = "Xato";
-    }
-  }
+// CALC
+function add(){
+  let a=Number(a=document.getElementById("a").value);
+  let b=Number(document.getElementById("b").value);
+  document.getElementById("res").innerText=a+b;
+}
+
+function sub(){
+  let a=Number(document.getElementById("a").value);
+  let b=Number(document.getElementById("b").value);
+  document.getElementById("res").innerText=a-b;
+}
+
+function mul(){
+  let a=Number(document.getElementById("a").value);
+  let b=Number(document.getElementById("b").value);
+  document.getElementById("res").innerText=a*b;
+}
+
+function div(){
+  let a=Number(document.getElementById("a").value);
+  let b=Number(document.getElementById("b").value);
+  document.getElementById("res").innerText=a/b;
+}
+
+// AGE CALC
+function calcAge(){
+  let y = Number(document.getElementById("year").value);
+  let now = new Date().getFullYear();
+  document.getElementById("ageRes").innerText = now - y;
+}
+
 </script>
 
 </body>
