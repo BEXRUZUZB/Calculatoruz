@@ -2,43 +2,82 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<title>Mini Tools</title>
+<title>Calculator + Tools</title>
 
 <style>
 body{
   font-family:Arial;
   background:#111;
   color:white;
-  text-align:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
-.box{
+.container{
   background:#222;
-  margin:15px auto;
   padding:15px;
-  width:300px;
   border-radius:10px;
+  width:300px;
+  text-align:center;
+  position:relative;
 }
 
+/* calculator */
 input{
-  padding:8px;
+  width:90%;
+  padding:10px;
   margin:5px;
-  width:80%;
 }
 
 button{
-  padding:8px 12px;
+  padding:8px 10px;
   margin:3px;
   cursor:pointer;
+}
+
+/* side button */
+.sideBtn{
+  position:absolute;
+  top:10px;
+  right:-60px;
+  background:orange;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+}
+
+/* popup */
+.popup{
+  display:none;
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#000000ee;
+  border-radius:10px;
+  padding-top:20px;
+}
+
+.popup input{
+  width:80%;
+}
+
+.closeBtn{
+  background:red;
+  color:white;
+  border:none;
+  margin-top:10px;
+  padding:8px;
 }
 </style>
 </head>
 <body>
 
-<h2>Mini Tools</h2>
+<div class="container">
 
-<!-- CALCULATOR -->
-<div class="box">
   <h3>Calculator</h3>
 
   <input id="a" type="number" placeholder="1-son">
@@ -50,31 +89,34 @@ button{
   <button onclick="calc('/')">/</button>
 
   <h3 id="res"></h3>
-</div>
 
-<!-- AGE -->
-<div class="box">
-  <h3>Yosh hisoblash</h3>
+  <!-- side button -->
+  <button class="sideBtn" onclick="togglePopup()">⚙</button>
 
-  <input id="year" type="number" placeholder="Tug'ilgan yil">
-  <button onclick="age()">Hisobla</button>
+  <!-- popup -->
+  <div class="popup" id="popup">
 
-  <h3 id="ageRes"></h3>
-</div>
+    <h3>Yosh hisoblash</h3>
+    <input id="year" type="number" placeholder="Tug'ilgan yil">
+    <button onclick="age()">Hisobla</button>
+    <h4 id="ageRes"></h4>
 
-<!-- YEAR -->
-<div class="box">
-  <h3>Yil tekshirish</h3>
+    <hr>
 
-  <input id="checkYear" type="number" placeholder="Yil yoz">
-  <button onclick="yearCheck()">Tekshir</button>
+    <h3>Yil tekshirish</h3>
+    <input id="checkYear" type="number" placeholder="Yil">
+    <button onclick="check()">Tekshir</button>
+    <h4 id="yearRes"></h4>
 
-  <h3 id="yearRes"></h3>
+    <br>
+    <button class="closeBtn" onclick="togglePopup()">Yopish</button>
+  </div>
+
 </div>
 
 <script>
 
-// CALC
+// calculator
 function calc(op){
   let a=Number(document.getElementById("a").value);
   let b=Number(document.getElementById("b").value);
@@ -87,27 +129,31 @@ function calc(op){
   document.getElementById("res").innerText=res;
 }
 
-// AGE
+// popup open/close
+function togglePopup(){
+  let p=document.getElementById("popup");
+  if(p.style.display=="block"){
+    p.style.display="none";
+  }else{
+    p.style.display="block";
+  }
+}
+
+// age
 function age(){
   let y=Number(document.getElementById("year").value);
   let now=new Date().getFullYear();
   document.getElementById("ageRes").innerText="Yosh: "+(now-y);
 }
 
-// YEAR CHECK
-function yearCheck(){
+// year check
+function check(){
   let y=Number(document.getElementById("checkYear").value);
   let now=new Date().getFullYear();
 
-  if(y==now){
-    document.getElementById("yearRes").innerText="Bu yil";
-  }
-  else if(y<now){
-    document.getElementById("yearRes").innerText="O‘tgan yil";
-  }
-  else{
-    document.getElementById("yearRes").innerText="Kelajak yil";
-  }
+  if(y<now) document.getElementById("yearRes").innerText="O'tgan yil";
+  else if(y==now) document.getElementById("yearRes").innerText="Hozirgi yil";
+  else document.getElementById("yearRes").innerText="Kelajak yil";
 }
 
 </script>
