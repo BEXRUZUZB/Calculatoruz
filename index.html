@@ -2,111 +2,112 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<title>Calculator + Yosh</title>
+<title>Mini Tools</title>
 
 <style>
 body{
-  font-family: Arial;
-  text-align:center;
+  font-family:Arial;
   background:#111;
   color:white;
+  text-align:center;
 }
 
 .box{
-  margin-top:30px;
-  padding:20px;
-}
-
-button{
-  padding:10px 15px;
-  margin:5px;
-  cursor:pointer;
+  background:#222;
+  margin:15px auto;
+  padding:15px;
+  width:300px;
+  border-radius:10px;
 }
 
 input{
-  padding:10px;
+  padding:8px;
   margin:5px;
+  width:80%;
+}
+
+button{
+  padding:8px 12px;
+  margin:3px;
+  cursor:pointer;
 }
 </style>
 </head>
 <body>
 
-<h2>Mini App</h2>
-
-<!-- MENU -->
-<button onclick="showCalc()">Calculator</button>
-<button onclick="showAge()">Yosh / Yil</button>
-
-<hr>
+<h2>Mini Tools</h2>
 
 <!-- CALCULATOR -->
-<div id="calc" class="box">
+<div class="box">
   <h3>Calculator</h3>
+
   <input id="a" type="number" placeholder="1-son">
   <input id="b" type="number" placeholder="2-son"><br>
 
-  <button onclick="add()">+</button>
-  <button onclick="sub()">-</button>
-  <button onclick="mul()">*</button>
-  <button onclick="div()">/</button>
+  <button onclick="calc('+')">+</button>
+  <button onclick="calc('-')">-</button>
+  <button onclick="calc('*')">*</button>
+  <button onclick="calc('/')">/</button>
 
-  <h3>Natija: <span id="res"></span></h3>
+  <h3 id="res"></h3>
 </div>
 
 <!-- AGE -->
-<div id="age" class="box" style="display:none;">
+<div class="box">
   <h3>Yosh hisoblash</h3>
 
   <input id="year" type="number" placeholder="Tug'ilgan yil">
+  <button onclick="age()">Hisobla</button>
 
-  <button onclick="calcAge()">Hisobla</button>
+  <h3 id="ageRes"></h3>
+</div>
 
-  <h3>Yosh: <span id="ageRes"></span></h3>
+<!-- YEAR -->
+<div class="box">
+  <h3>Yil tekshirish</h3>
+
+  <input id="checkYear" type="number" placeholder="Yil yoz">
+  <button onclick="yearCheck()">Tekshir</button>
+
+  <h3 id="yearRes"></h3>
 </div>
 
 <script>
 
-// MENU
-function showCalc(){
-  document.getElementById("calc").style.display="block";
-  document.getElementById("age").style.display="none";
-}
-
-function showAge(){
-  document.getElementById("calc").style.display="none";
-  document.getElementById("age").style.display="block";
-}
-
 // CALC
-function add(){
-  let a=Number(a=document.getElementById("a").value);
-  let b=Number(document.getElementById("b").value);
-  document.getElementById("res").innerText=a+b;
-}
-
-function sub(){
+function calc(op){
   let a=Number(document.getElementById("a").value);
   let b=Number(document.getElementById("b").value);
-  document.getElementById("res").innerText=a-b;
+
+  if(op=='+') res=a+b;
+  if(op=='-') res=a-b;
+  if(op=='*') res=a*b;
+  if(op=='/') res=a/b;
+
+  document.getElementById("res").innerText=res;
 }
 
-function mul(){
-  let a=Number(document.getElementById("a").value);
-  let b=Number(document.getElementById("b").value);
-  document.getElementById("res").innerText=a*b;
+// AGE
+function age(){
+  let y=Number(document.getElementById("year").value);
+  let now=new Date().getFullYear();
+  document.getElementById("ageRes").innerText="Yosh: "+(now-y);
 }
 
-function div(){
-  let a=Number(document.getElementById("a").value);
-  let b=Number(document.getElementById("b").value);
-  document.getElementById("res").innerText=a/b;
-}
+// YEAR CHECK
+function yearCheck(){
+  let y=Number(document.getElementById("checkYear").value);
+  let now=new Date().getFullYear();
 
-// AGE CALC
-function calcAge(){
-  let y = Number(document.getElementById("year").value);
-  let now = new Date().getFullYear();
-  document.getElementById("ageRes").innerText = now - y;
+  if(y==now){
+    document.getElementById("yearRes").innerText="Bu yil";
+  }
+  else if(y<now){
+    document.getElementById("yearRes").innerText="O‘tgan yil";
+  }
+  else{
+    document.getElementById("yearRes").innerText="Kelajak yil";
+  }
 }
 
 </script>
